@@ -1,22 +1,16 @@
 package sockets;
 
+// Keeping imports easy to remember.
 import java.io.*;
 import java.net.*;
 
-/**
- *
- * @author darren
- */
 public class Server {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        // Port number to bound server to.
-        int portNum = 11112;
-
-        // Simple reponse to send back to client once Integer is receieved.
-        String response = "Integer Object Recieved.";
-
+        // Port number to bind server to.
+        int portNum = 11113;
+        
         // Socket for server to listen at.
         ServerSocket listener = new ServerSocket(portNum);
 
@@ -36,16 +30,23 @@ public class Server {
                 int i = (Integer) in.readObject();
 
                 //Sending response back to client
-                out.writeChars(response);
-                PrintWriter pri = new PrintWriter(clientSocket.getOutputStream(), true);
-                pri.println(response);
+                String response = "Integer Object Received.";
+                out.writeObject(response);
 
                 // Outputting recieved Integer Object.
                 System.out.println("Received integer: " + i);
+                out.close();
+                in.close();
+                clientSocket.close();
+                break;
             } finally {
-                // Closing Server Socket now.
-                listener.close();
+                      // Closing Server Socket now.
+                      listener.close();
+               
             }
+            
+             
+                
         }
     }
 

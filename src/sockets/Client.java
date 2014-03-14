@@ -9,9 +9,9 @@ import java.net.*;
  */
 public class Client {
 
-    public static void main(String arg[]) throws IOException {
+    public static void main(String arg[]) throws IOException, ClassNotFoundException {
 
-        int portNum = 11112;
+        int portNum = 11113;
 
         Socket socket = new Socket("localhost", portNum);
 
@@ -22,10 +22,12 @@ public class Client {
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
         
         out.writeObject(num);
+                
+        String response = (String) in.readObject();
+
+        System.out.println("Server message: " + response);
         
-        char res = in.readChar();
-        
-        System.out.println("Response from Server received: " + res);
+        //socket.close();
         
     }
 }
